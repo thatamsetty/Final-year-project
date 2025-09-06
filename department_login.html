@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+
+{% block title %}Department Login{% endblock %}
+
+
+
+
+{% block header %}
+<!-- ***** Navbar Start ***** -->
+<header class="header-area header-sticky" >
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'index' %}" class="logo" style="color: white; font-size: 2rem; font-weight: bold;"> Timetable </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="{% url 'index' %}" class="active" style="color: white;">Home</a></li>
+                        <li class="scroll-to-section"><a href="#about" style="color: white;">About</a></li>
+                        <li class="submenu">
+                            <a href="javascript:;" style="color: white;">Login</a>
+                            <ul>
+                                <li><a href="{% url 'admin_login' %}" style="color: #3498db;">ADMIN</a></li>
+                                <li><a href="{% url 'department_login' %}" style="color: #3498db;">Department</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Navbar End ***** -->
+{% endblock %}
+
+
+<style>
+
+    
+       
+    /* Styling for input fields in the Department Login form */
+.form-control {
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #2980b9;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    transform: scale(1.02);
+}
+
+.form-control::placeholder {
+    color: #7f8c8d;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Adjust input field hover effect */
+.form-control:hover {
+    border-color: #2980b9;
+    background-color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .form-control {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+}
+
+
+</style>
+<!-- Department Login Section Start -->
+<section class="section py-5" style="background-color: #ecf0f1;">
+    <div class="container-D">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9">
+                {% block area %}
+                <div class="card p-4 shadow-lg rounded" style="width: 400px;">
+                    <h2 class="text-center mb-4" style="color: #2980b9;">Department Login</h2>
+                    <form action="/department_login/" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email ID" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2" style="background-color: #3498db;">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Department Login Section End -->
+{% endblock %}
+
+{% block footer %}
+<!-- You can add custom footer content here if needed -->
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends 'index.html' %}
+
+{% block title %}Admin Login{% endblock %}
+
+
+<style>
+  /* Form container styles */
+.section {
+    background-color: #ecf0f1;
+    padding: 100px 0; /* Adds top and bottom padding */
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card styles */
+.card {
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    height: 200px;
+    max-width: 1000px;
+    width: 500px;
+}
+
+/* Title inside the card */
+.card h2 {
+    color: #2980b9;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+/* Input field styles */
+.form-control {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px; /* Spacing between inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Input field focus effect */
+.form-control:focus {
+    border-color: #3498db; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); /* Subtle box shadow */
+    outline: none; /* Remove the default focus outline */
+}
+
+/* Placeholder text styling */
+.form-control::placeholder {
+    color: #999;
+}
+
+/* Submit button styles */
+.btn {
+    padding: 1rem;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit button hover effect */
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* Centering the form on the page */
+body {
+    margin: 0;
+    width: 10px;
+    height: 50px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container{
+    margin: 100px;
+    padding: 100px;
+    align-items: center;
+}
+
+</style>
+
+
+
+{% block header %}
+<!-- ***** Navbar Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="#" class="logo"> Timetable </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="{% url 'index' %}" >Home</a></li>
+                        <li class="scroll-to-section"><a href="#about">About</a></li>
+                        <!-- <li class="scroll-to-section"><a href="#services">Services</a></li>
+                        <li class="scroll-to-section"><a href="#frequently-question">Frequently Questions</a></li> -->
+                        <li class="submenu">
+                            <a href="javascript:;">Login</a>
+                            <ul>
+                                <li><a href="{% url 'admin_login' %}">ADMIN</a></li>
+                                <li><a href="{% url 'department_login' %}">Department</a></li>
+                                
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                    
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Navbar End ***** -->
+{% endblock %}
+
+
+<!-- Admin Login Section Start -->
+<section class="section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9">
+                {% block area %}
+                <div class="card p-4 shadow-lg rounded" style="width: 400px; height: 270px;">
+                    <h2 class="text-center mb-4" style="color: #2980b9;">Admin Login</h2>
+                    <form action="/admin_login/" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email ID" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2" style="background-color: #3498db;">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Admin Login Section End -->
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 col-sm-12">
+                <p class="copyright">Copyright &copy; 2020 Art Factory Company 
+            
+            . Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12">
+                <ul class="social">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

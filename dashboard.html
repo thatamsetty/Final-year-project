@@ -1,0 +1,254 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}Dashboard{% endblock %}
+    
+
+</head>
+<body>
+  
+
+<!-- Add Bootstrap CSS for Styling -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+<style>
+   /* Global Styles */
+   body {
+        background-color: rgb(91, 172, 248); 
+        color: white;
+    }
+
+    .header-area {
+        background-color: black;
+        padding: 20px 0;
+    }
+
+    /* Navigation Bar */
+    .main-nav .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Flexbox Layout to Align Logo on Left and Menu on Right */
+    .main-nav {
+        display: flex;
+        justify-content: space-between; /* Pushes logo to the left and menu to the right */
+        align-items: center; /* Vertically centers items */
+    }
+
+    .main-nav .nav {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+        padding-left: 0;
+    }
+
+    .main-nav .nav li a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        font-size: 12px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .main-nav .nav li a:hover,
+    .main-nav .nav li a.active {
+        background-color: #007bff;
+    }
+
+    .department-dashboard {
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .department-dashboard h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .department-dashboard p {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+
+    /* Card Styling for Quick Actions */
+    .dashboard-card {
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #2c3e50;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h3 {
+        font-size: 1.8rem;
+        color: #ecf0f1;
+    }
+
+    .card p {
+        font-size: 1.1rem;
+        color: #bdc3c7;
+    }
+
+    .card a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .card a:hover {
+        color: #2980b9;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #34495e;
+        color: white;
+        padding: 10px;
+        margin-top: auto;  /* Ensures footer stays at the bottom of the page */
+        text-align: center;
+    }
+/* Container for messages */
+.alert-container {
+    position: fixed; /* Fixed position so the alerts stay at the top */
+    top: 20px; /* Space from the top */
+    left: 50%;
+    transform: translateX(-50%); /* Center the alerts horizontally */
+    width: 100%;
+    max-width: 500px; /* Limit the max width */
+    z-index: 9999; /* Ensure it appears above other content */
+    margin: 0 auto; /* Center horizontally */
+}
+
+/* General Alert Styling */
+.alert {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Start with hidden opacity */
+    animation: fadeIn 1s forwards; /* Animation to fade in */
+}
+
+/* Fade-in Animation for Alerts */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Success Alert */
+.alert-success {
+    background-color: #28a745;
+    border-color: #218838;
+}
+
+/* Error Alert */
+.alert-danger {
+    background-color: #dc3545;
+    border-color: #c82333;
+}
+
+/* Info Alert */
+.alert-info {
+    background-color: #17a2b8;
+    border-color: #117a8b;
+}
+
+/* Warning Alert */
+.alert-warning {
+    background-color: #ffc107;
+    border-color: #e0a800;
+    color: #212529;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .alert-container {
+        width: 90%; /* Adjust width for smaller screens */
+        max-width: 400px;
+        margin-right: 100px;
+    }
+}
+
+
+</style>
+{% block header %}
+<!-- Navigation Bar -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- Logo -->
+                    <a href="{% url 'dashboard' %}" class="logo"> Timetable </a>
+                    <!-- Menu -->
+                    <ul class="nav">
+                        <li><a href="{% url 'dashboard' %}">Home</a></li>
+                        <li><a href="{% url 'add_department' %}">Add Department</a></li>
+                        <li><a href="{% url 'manage_department' %}">Manage Department</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% endblock %}
+
+  {% block area %}
+  <div class="header-text">
+    <div class="container">
+        <div class="row">
+            <div class="left-text col-lg-6 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+                <h1><strong>Automatic Timetable Generator</strong></h1>
+                <!-- <p>This template is available for 100% free of charge on TemplateMo. Download, modify and use this for your business website.</p> -->
+                <a href="#about" class="main-button-slider">Read More</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+                <img src="/static/assets/images/i1.png" class="rounded img-fluid d-block mx-auto" alt="First Vector Graphic">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  {% endblock %}
+
+  {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,180 @@
+{% extends 'index.html' %}
+
+{% block title %}Departments{% endblock %}
+{% block header %}
+<!-- ***** Navbar Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- Logo -->
+                    <a href="{% url 'dashboard' %}" class="logo"> Timetable </a>
+                    <!-- Menu -->
+                    <ul class="nav">
+                        <li><a href="{% url 'dashboard' %}">Home</a></li>
+                        <li><a href="{% url 'add_department' %}">Add Department</a></li>
+                        <li><a href="{% url 'manage_department' %}">Manage Department</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Navbar End ***** -->
+{% endblock %}
+
+
+{% block area %}
+<div class="container mt-5">
+    <!-- Department List Title -->
+    <center><h2>Department List</h2></center><br><br>
+
+    <!-- Department List Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Department Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in departments %}
+            <tr>
+                <td>{{ department.department_name }}</td>
+                <td>{{ department.email }}</td>
+                <td>
+                    <a href="{% url 'edit_department' department.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete_department' department.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <center><a href="{% url 'dashboard' %}"><button class="btn btn-primary">Dashboard</button></a></center>
+</div>
+{% endblock %}
+
+
+
+<!-- CSS Styling -->
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    /* Title */
+    h2 {
+        color: #2980b9;
+        font-size: 2rem;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    thead {
+        background-color: #2980b9;
+        color: white;
+        text-align: left;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    /* Hover effects for rows */
+    tr:hover {
+        background-color: #f7f7f7;
+    }
+
+    /* Action Buttons */
+    .btn {
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 14px;
+        text-decoration: none;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+        color: white;
+        border: none;
+    }
+
+    .btn-warning:hover {
+        background-color: #e67e22;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        .btn {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+
+        .btn-warning, .btn-danger {
+            display: block;
+            margin-top: 5px;
+            width: 100%;
+        }
+    }
+
+    /* For larger screens, we keep the table layout intact */
+    @media (min-width: 769px) {
+        .btn {
+            width: auto;
+        }
+    }
+    button{
+        background-color: blue;
+    }
+</style>

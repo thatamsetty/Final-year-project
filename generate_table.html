@@ -1,0 +1,178 @@
+{% extends 'index.html' %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{% csrf_token %}">
+    <title>Add Timetable</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #ecf0f1;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-heading {
+            color: #2980b9;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+{% block area %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <h2 class="form-heading">Add Timetable</h2>
+
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        
+                        <div class="form-group">
+                            <label for="faculty">Faculty</label>
+                            <select name="faculty" id="faculty" class="form-control" required>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty.id }}">{{ faculty.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                      
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select name="department" id="department" class="form-control" required>
+                                {% for department in departments %}
+                                <option value="{{ department.id }}">{{ department.department_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        
+
+                       
+
+                     
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select name="subject" id="subject" class="form-control" required>
+                                {% for subject in subjects %}
+                                <option value="{{ subject.id }}">{{ subject.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                       
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit Timetable</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Timetable</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; text-align: center; border: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        td.empty { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Generated Timetable</h1>
+
+    <form method="POST" action="{% url 'generate_timetable' %}">
+        {% csrf_token %}
+        <button type="submit">Generate Timetable</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Period 1</th>
+                <th>Period 2</th>
+                <th>Period 3</th>
+                <th>Period 4</th> 
+                <th>Period 5</th>
+                <th>Period 6</th>
+                <th>Period 7</th>
+                <th>Period 8</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] %}
+                <tr>
+                    <td><strong>{{ day }}</strong></td>
+                    {% for period in 1|to:8 %}
+                        {% with entry=timetable_data|get_period_for_day_and_period:day|default:"" %}
+                            <td class="{% if entry %}empty{% endif %}">
+                                {% if entry %}
+                                    <strong>{{ entry.subject.name }}</strong><br>
+                                    {{ entry.start_time }} - {{ entry.end_time }}<br>
+                                    {{ entry.faculty.name }}
+                                {% else %}
+                                    No Class
+                                {% endif %}
+                            </td>
+                        {% endwith %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,190 @@
+{% extends 'index.html' %}
+
+{% block title %}Add Department{% endblock %}
+
+
+
+<style>
+    
+
+   /* Global Styles */
+   body {
+        background-color: rgb(91, 172, 248); 
+        color: white;
+    }
+
+    .header-area {
+        background-color: black;
+        padding: 20px 0;
+    }
+
+    /* Navigation Bar */
+    .main-nav .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Flexbox Layout to Align Logo on Left and Menu on Right */
+    .main-nav {
+        display: flex;
+        justify-content: space-between; /* Pushes logo to the left and menu to the right */
+        align-items: center; /* Vertically centers items */
+    }
+
+    .main-nav .nav {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+        padding-left: 0;
+    }
+
+    .main-nav .nav li a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        font-size: 12px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .main-nav .nav li a:hover,
+    .main-nav .nav li a.active {
+        background-color: #007bff;
+    }
+
+    .department-dashboard {
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .department-dashboard h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .department-dashboard p {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+
+    /* Card Styling for Quick Actions */
+    .dashboard-card {
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #2c3e50;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h3 {
+        font-size: 1.8rem;
+        color: #ecf0f1;
+    }
+
+    .card p {
+        font-size: 1.1rem;
+        color: #bdc3c7;
+    }
+
+    .card a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .card a:hover {
+        color: #2980b9;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #34495e;
+        color: white;
+        padding: 10px;
+        margin-top: auto;  /* Ensures footer stays at the bottom of the page */
+        text-align: center;
+    }
+</style>
+{% block header %}
+<!-- ***** Navbar Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- Logo -->
+                    <a href="{% url 'dashboard' %}" class="logo"> Timetable </a>
+                    <!-- Menu -->
+                    <ul class="nav">
+                        <li><a href="{% url 'dashboard' %}">Home</a></li>
+                        <li><a href="{% url 'add_department' %}">Add Department</a></li>
+                        <li><a href="{% url 'manage_department' %}">Manage Department</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Navbar End ***** -->
+{% endblock %}
+
+
+<!-- Add Faculty Form Start -->
+<section class="section py-5" style="background-color: #ecf0f1;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-12">
+                {% block area %}
+                <div class="card p-4 shadow-lg rounded" style="width: 400px;">
+                    <h2 class="text-center mb-4" style="color: #2980b9;">Add Department</h2>
+                    <form action="{% url 'add_department' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Enter Department Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email ID" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2" style="background-color: #3498db;">Add Department</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Add Faculty Form End -->
+
+{% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<!-- ***** Footer Start ***** -->
+<footer class="footer bg-dark text-white text-center py-3" style="background-color: #34495e;">
+    <p>&copy; 2025 Automatic Timetable Generator. All rights reserved.</p>
+</footer>
+<!-- ***** Footer End ***** -->
+{% endblock %}

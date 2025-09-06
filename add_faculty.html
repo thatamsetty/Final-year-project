@@ -1,0 +1,197 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    <title>Add Faculty</title>
+{% endblock %}
+
+
+{% block header %}
+<!-- Navigation Bar -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- Logo -->
+                    <a href="{% url 'department_dashboard' %}" class="logo"> Timetable </a>
+                    <!-- Menu -->
+                    <ul class="nav">
+                        <li><a href="{% url 'department_dashboard' %}" >Home</a></li>
+                        <li class="scroll-to-section"><a href="{% url 'add_faculty' %}">Add Faculty</a></li>
+
+                        <li><a href="{% url 'add_subject' %}">Add Subjects</a></li>
+                        <!-- <li><a href="{% url 'generate_timetable' %}">Generate Timetable</a></li> -->
+                        <li><a href="{% url 'view_table' %}">View Timetable</a></li>
+                        <li><a href="{% url 'department_logout' %}">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+{% block area %}
+<div class="main-container">
+    <div class="card-form">
+        <h2 class="title">Add Faculty</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <!-- First Row: Name and Department -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Faculty Name</label>
+                    <input type="text" name="name" id="name" placeholder="Enter Faculty Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Select Department</label>
+                    <select name="department" id="department" required>
+                        {% for department in departments %}
+                            <option value="{{ department.id }}">{{ department.department_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Second Row: Email and Designation -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Faculty Email</label>
+                    <input type="email" name="email" id="email" placeholder="Enter Faculty Email ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <input type="text" name="designation" id="designation" placeholder="Enter Designation Details" required>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Add Faculty</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-container {
+        margin-top: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-form {
+        background: #fff;
+        padding: 35px 40px;
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+    }
+
+    .title {
+        margin-bottom: 25px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        position: relative;
+    }
+
+    .title::after {
+        content: '';
+        width: 60px;
+        height: 3px;
+        background: #007bff;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -10px;
+        border-radius: 5px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        flex: 1;
+        text-align: left;
+    }
+
+    label {
+        font-size: 14px;
+        color: #555;
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #f9f9f9;
+        font-size: 14px;
+        transition: 0.3s;
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+        border-color: #007bff;
+        background: #fff;
+        outline: none;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+        background: #0056b3;
+    }
+</style>
+
+
+
+{% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+

@@ -1,0 +1,184 @@
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+{% block area %}
+<section class="section py-5" style="background-color: #ecf0f1;">
+    <div class="container">
+        <a href="{% url 'department_dashboard' %}">
+            <button class="btn btn-primary mb-3">Back</button>
+        </a>
+        <h2 class="text-center mb-4" style="color: #2980b9;">View Timetable</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle text-center">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Day / Time</th>
+                        <th>9:00 - 10:00</th>
+                        <th>10:00 - 11:00</th>
+                        <th>11:00 - 12:00</th>
+                        <th>12:00 - 1:00</th>
+                        <th>1:00 - 2:00</th>
+                        <th>2:00 - 3:00</th>
+                        <th>3:00 - 4:00</th>
+                        <th>4:00 - 5:00</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day, entries in timetable_data.items %}
+                    <tr>
+                        <td><strong>{{ day }}</strong></td>
+                        {% for time in time_slots %}
+                        <td>
+                            {% if time == '12:00:00' %}
+                                <strong>Lunch Break</strong>
+                            {% else %}
+                                {% with printed=False %}
+                                    {% for entry in entries %}
+                                        {% if entry.start_time_formatted == time %}
+                                            <div>
+                                                {{ entry.subject.name }}
+                                                {% if entry.subject.is_lab %}
+                                                    <span class="badge bg-warning text-dark">Lab</span>
+                                                {% endif %}
+                                            </div>
+                                            {% with printed=True %}
+                                            {% endwith %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if not printed %}
+                                        
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'generate_timetable' %}" class="btn btn-success">
+                Generate Table
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<style>
+    /* Make sure body and html can scroll */
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden; /* Prevent side-scroll, but allow up-down scroll */
+    }
+
+    .section {
+        min-height: 100vh; /* Each section minimum 100% height */
+        padding: 60px 0;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 10px;
+        background: #ffffff;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    table {
+        min-width: 1000px; /* Force table width to allow horizontal scroll */
+    }
+
+    /* Scrollbar design */
+    .table-responsive::-webkit-scrollbar {
+        height: 8px;
+    }
+    .table-responsive::-webkit-scrollbar-thumb {
+        background: #2980b9;
+        border-radius: 10px;
+    }
+    .table-responsive::-webkit-scrollbar-track {
+        background: #dfe6e9;
+        border-radius: 10px;
+    }
+
+    /* Header Styling */
+    .header-area {
+        background-color: white;
+        padding: 10px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .main-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .main-nav .nav li a {
+        color: #2980b9;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .main-nav .nav li a:hover {
+        color: red;
+    }
+
+    .timetable-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        margin-top: 30px;
+        padding: 10px;
+    }
+
+    .timetable-header {
+        display: flex;
+        justify-content: space-between;
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+    }
+
+    .timetable-header div {
+        flex: 1;
+        text-align: center;
+    }
+
+    .timetable-cell {
+        background-color: #34495e;
+        color: #bdc3c7;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timetable-cell:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-btn {
+        margin-top: 20px;
+    }
+</style>
+
+{% block footer %}
+{% endblock %}
+
+
