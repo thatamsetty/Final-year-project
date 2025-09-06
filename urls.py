@@ -1,22 +1,20 @@
-"""
-URL configuration for timetable project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path,include
+from app.views import *
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('app.urls') ),
+    path('',index,name='index' ),
+    path('admin_login/', admin_login,name='admin_login'),
+    path('department_login/',department_login,name='department_login'),
+    path('logout/',logout,name='logout'),
+    path('add_department/',add_department, name='add_department'),
+    path('manage_department/',manage_department,name='manage_department'),
+    path('add_faculty/',add_faculty,name='add_faculty'),
+    path('add_subject/',add_subject,name='add_subject'),
+    path('department_dashboard/',department_dashboard,name='department_dashboard'),
+    path('dashboard/',dashboard,name='dashboard'),
+    path('generate_timetable/',generate_timetable,name='generate_timetable'),
+    path('view_table/',view_table,name='view_table'),
+    path('department_logout/',department_logout,name='department_logout'),
+    path('edit/<int:department_id>/', edit_department, name='edit_department'),
+    path('delete/<int:department_id>/', delete_department, name='delete_department')
 ]
